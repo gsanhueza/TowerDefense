@@ -10,4 +10,4 @@ build/CMakeCache.txt
 build/cmake_install.cmake
 build/compile_commands.json
 build/Makefile
-
+build/dist/bin/
