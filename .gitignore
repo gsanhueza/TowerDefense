@@ -14,3 +14,6 @@ build/compile_commands.json
 build/Makefile
 build/dist/bin/ogre.cfg
 Ogre.log
+
+# Executable
+build/dist/bin/OgreApp_d
