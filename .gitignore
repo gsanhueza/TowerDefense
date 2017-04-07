@@ -13,7 +13,9 @@ build/cmake_install.cmake
 build/compile_commands.json
 build/Makefile
 build/dist/bin/ogre.cfg
+build/dist/bin/Ogre.log
 Ogre.log
 
 # Executable
+build/dist/bin/OgreApp
 build/dist/bin/OgreApp_d
