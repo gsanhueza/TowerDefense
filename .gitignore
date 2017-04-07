@@ -3,13 +3,14 @@
 .kdev4
 TowerDefense.kdev4
 .idea
-cmake-build-debug
 
 # Builds
 
+cmake-build-debug
 build/CMakeFiles
 build/CMakeCache.txt
 build/cmake_install.cmake
 build/compile_commands.json
 build/Makefile
-build/dist/bin
+build/dist/bin/ogre.cfg
+Ogre.log
