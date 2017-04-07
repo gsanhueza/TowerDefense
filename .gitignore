@@ -6,7 +6,6 @@ TowerDefense.kdev4
 # Builds
 
 build/CMakeFiles
-build/dist
 build/CMakeCache.txt
 build/cmake_install.cmake
 build/compile_commands.json
