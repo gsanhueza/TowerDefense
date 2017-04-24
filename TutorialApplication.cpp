@@ -56,11 +56,13 @@ void TutorialApplication::createScene()
     mSceneMgr->setAmbientLight(Ogre::ColourValue(0, 0, 0));
     mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 
-    // Create ninja
-    Ogre::Entity* ninjaEntity = mSceneMgr->createEntity("ogrehead.mesh");
-    ninjaEntity->setCastShadows(true);
+    // Create ogre
+    Ogre::Entity* ogreEntity = mSceneMgr->createEntity("ogrehead.mesh");
+    ogreEntity->setCastShadows(true);
 
-    mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(ninjaEntity);
+    Ogre::SceneNode *ogreNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+    ogreNode->setPosition(0, 40, 0);
+    ogreNode->attachObject(ogreEntity);
 
     // Create ground
     Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
