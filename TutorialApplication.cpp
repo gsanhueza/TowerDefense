@@ -26,48 +26,88 @@ TutorialApplication::~TutorialApplication(void)
 }
 
 //-------------------------------------------------------------------------------------
-void TutorialApplication::createScene(void)
+void TutorialApplication::createCamera()
 {
-    // Set camera as first position
-    mCamera->setPosition(0, 47, 222);
+    mCamera = mSceneMgr->createCamera("PlayerCam");
 
-    // Ambient Light
-    mSceneMgr->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
+    mCamera->setPosition(Ogre::Vector3(0, 300, 500));
+    mCamera->lookAt(Ogre::Vector3(0, 0, 0));
+    mCamera->setNearClipDistance(5);
 
-    // Ogre Entity
-    Ogre::Entity* ogreEntity = mSceneMgr->createEntity("ogrehead.mesh");
-
-    Ogre::SceneNode* ogreNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-    ogreNode->attachObject(ogreEntity);
-
-    // Ogre Entity 2 (Copy in different position)
-    Ogre::Entity* ogreEntity2 = mSceneMgr->createEntity("ogrehead.mesh");
-
-    Ogre::SceneNode* ogreNode2 = mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::Vector3(84, 48, 0));
-    ogreNode2->attachObject(ogreEntity2);
-
-    // Ogre Entity 3 (Deformed)
-    Ogre::Entity* ogreEntity3 = mSceneMgr->createEntity("ogrehead.mesh");
-
-    Ogre::SceneNode* ogreNode3 = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-    ogreNode3->setPosition(0, 104, 0);
-    ogreNode3->setScale(2, 1.2, 1);
-    ogreNode3->attachObject(ogreEntity3);
-
-    // Ogre Entity 4 (Rotated)
-    Ogre::Entity* ogreEntity4 = mSceneMgr->createEntity("ogrehead.mesh");
-
-    Ogre::SceneNode* ogreNode4 = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-    ogreNode4->setPosition(-84, 48, 0);
-    ogreNode4->roll(Ogre::Degree(-90));
-    ogreNode4->attachObject(ogreEntity4);
-
-    // Illumination
-    Ogre::Light* light = mSceneMgr->createLight("MainLight");
-    light->setPosition(20, 80, 50);
+    mCameraMan = new OgreBites::SdkCameraMan(mCamera);
 }
 
+//-------------------------------------------------------------------------------------
+void TutorialApplication::createViewports()
+{
+    Ogre::Viewport* vp = mWindow->addViewport(mCamera);
 
+    vp->setBackgroundColour(Ogre::ColourValue(0, 0, 0));
+
+    mCamera->setAspectRatio(
+        Ogre::Real(vp->getActualWidth()) /
+        Ogre::Real(vp->getActualHeight()));
+
+}
+
+//-------------------------------------------------------------------------------------
+void TutorialApplication::createScene()
+{
+    mSceneMgr->setAmbientLight(Ogre::ColourValue(0, 0, 0));
+    mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+
+    // Create ninja
+    Ogre::Entity* ninjaEntity = mSceneMgr->createEntity("ogrehead.mesh");
+    ninjaEntity->setCastShadows(true);
+
+    mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(ninjaEntity);
+
+    // Create ground
+    Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
+
+    Ogre::MeshManager::getSingleton().createPlane(
+        "ground",
+        Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+        plane, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
+
+    Ogre::Entity* groundEntity = mSceneMgr->createEntity("ground");
+    mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(groundEntity);
+
+    groundEntity->setMaterialName("Examples/Rockwall");
+    groundEntity->setCastShadows(false);
+
+    // Spotlight
+    Ogre::Light* spotLight = mSceneMgr->createLight("Spotlight");
+    spotLight->setType(Ogre::Light::LT_SPOTLIGHT);
+
+    spotLight->setDiffuseColour(Ogre::ColourValue(0, 0, 1));
+    spotLight->setSpecularColour(Ogre::ColourValue(0, 0, 1));
+
+    spotLight->setDirection(-1, -1, 0);
+    spotLight->setPosition(Ogre::Vector3(200, 200, 0));
+
+    spotLight->setSpotlightRange(Ogre::Degree(35), Ogre::Degree(50));
+
+    // Directional light
+    Ogre::Light* directionalLight = mSceneMgr->createLight("DirectionalLight");
+    directionalLight->setType(Ogre::Light::LT_DIRECTIONAL);
+
+    directionalLight->setDiffuseColour(Ogre::ColourValue(.4, 0, 0));
+    directionalLight->setSpecularColour(Ogre::ColourValue(.4, 0, 0));
+
+    directionalLight->setDirection(Ogre::Vector3(0, -1, 1));
+
+    // Point light
+    Ogre::Light* pointLight = mSceneMgr->createLight("PointLight");
+    pointLight->setType(Ogre::Light::LT_POINT);
+
+    pointLight->setDiffuseColour(.3, .3, .3);
+    pointLight->setSpecularColour(.3, .3, .3);
+
+    pointLight->setPosition(Ogre::Vector3(0, 150, 250));
+}
+
+//-------------------------------------------------------------------------------------
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 #define WIN32_LEAN_AND_MEAN
