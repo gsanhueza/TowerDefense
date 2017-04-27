@@ -4,17 +4,19 @@ Filename:    TutorialApplication.cpp
 -----------------------------------------------------------------------------
 
 This source file is part of the
-   ___                 __    __ _ _    _ 
+   ___                 __    __ _ _    _
   /___\__ _ _ __ ___  / / /\ \ (_) | _(_)
  //  // _` | '__/ _ \ \ \/  \/ / | |/ / |
 / \_// (_| | | |  __/  \  /\  /| |   <| |
 \___/ \__, |_|  \___|   \/  \/ |_|_|\_\_|
-      |___/                              
+      |___/
       Tutorial Framework
       http://www.ogre3d.org/tikiwiki/
 -----------------------------------------------------------------------------
 */
 #include "TutorialApplication.h"
+#include <bullet/btBulletDynamicsCommon.h>
+
 
 //-------------------------------------------------------------------------------------
 TutorialApplication::TutorialApplication(void)
@@ -30,8 +32,6 @@ void TutorialApplication::createScene(void)
 {
     // create your scene here :)
 }
-
-
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 #define WIN32_LEAN_AND_MEAN
@@ -51,6 +51,7 @@ extern "C" {
         // Create application object
         TutorialApplication app;
 
+	btBroadphaseInterface* broadphase = new btDbvtBroadphase();
         try {
             app.go();
         } catch( Ogre::Exception& e ) {
