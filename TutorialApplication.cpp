@@ -15,6 +15,7 @@ This source file is part of the
 -----------------------------------------------------------------------------
 */
 #include "TutorialApplication.h"
+#include <btBulletDynamicsCommon.h>
 
 //-------------------------------------------------------------------------------------
 TutorialApplication::TutorialApplication(void)
@@ -129,6 +130,7 @@ extern "C" {
         // Create application object
         TutorialApplication app;
 
+        btBroadphaseInterface* broadphase = new btDbvtBroadphase();
         try {
             app.go();
         } catch( Ogre::Exception& e ) {
