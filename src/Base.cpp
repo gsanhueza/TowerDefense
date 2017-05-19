@@ -1,7 +1,7 @@
 #include "Base.h"
 #include <iostream>
 
-Base::Base() : OgreBites::ApplicationContext("Base")
+Base::Base() : OgreBites::ApplicationContext("TowerDefense")
 {
     addInputListener(this);
 }
@@ -25,6 +25,8 @@ bool Base::keyReleased(const OgreBites::KeyboardEvent& evt)
 bool Base::mouseMoved(const OgreBites::MouseMotionEvent& evt)
 {
     std::cout << "Moved!" << std::endl;
+    std::cout << evt.xrel << std::endl;
+    std::cout << evt.yrel << std::endl;
     return true;
 }
 
@@ -61,11 +63,11 @@ void Base::setup(void)
 
     // without light we would just get a black screen
     Ogre::Light* light = scnMgr->createLight("MainLight");
-    light->setPosition(0, 10, 15);
+    light->setPosition(20, 80, 50);
 
     // also need to tell where we are
     Ogre::SceneNode* camNode = scnMgr->getRootSceneNode()->createChildSceneNode();
-    camNode->setPosition(30, 0, 100);
+    camNode->setPosition(0, 47, 222);
     camNode->lookAt(Ogre::Vector3(0, 0, -1), Ogre::Node::TS_PARENT);
 
     // create the camera
@@ -78,7 +80,23 @@ void Base::setup(void)
     getRenderWindow()->addViewport(cam);
 
     // finally something to render
-    Ogre::Entity* ent = scnMgr->createEntity("ogrehead.mesh");
-    Ogre::SceneNode* node = scnMgr->getRootSceneNode()->createChildSceneNode();
-    node->attachObject(ent);
+    Ogre::Entity* ent1 = scnMgr->createEntity("ogrehead.mesh");
+    Ogre::Entity* ent2 = scnMgr->createEntity("ogrehead.mesh");
+    Ogre::Entity* ent3 = scnMgr->createEntity("ogrehead.mesh");
+    Ogre::Entity* ent4 = scnMgr->createEntity("ogrehead.mesh");
+    Ogre::SceneNode* node1 = scnMgr->getRootSceneNode()->createChildSceneNode();
+    Ogre::SceneNode* node2 = scnMgr->getRootSceneNode()->createChildSceneNode(Ogre::Vector3(84, 48, 0));
+
+    Ogre::SceneNode* node3 = scnMgr->getRootSceneNode()->createChildSceneNode();
+    node3->setPosition(0, 104, 0);
+    node3->setScale(2, 1.2, 1);
+
+    Ogre::SceneNode* node4 = scnMgr->getRootSceneNode()->createChildSceneNode();
+    node4->setPosition(-84, 48, 0);
+    node4->roll(Ogre::Degree(-90));
+
+    node1->attachObject(ent1);
+    node2->attachObject(ent2);
+    node3->attachObject(ent3);
+    node4->attachObject(ent4);
 }
