@@ -1,4 +1,5 @@
 #include "Base.h"
+#include <iostream>
 
 Base::Base() : OgreBites::ApplicationContext("Base")
 {
@@ -7,10 +8,41 @@ Base::Base() : OgreBites::ApplicationContext("Base")
 
 bool Base::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
+    std::cout << "Pressed (KBD)!" << std::endl;
     if (evt.keysym.sym == SDLK_ESCAPE)
     {
         getRoot()->queueEndRendering();
     }
+    return true;
+}
+
+bool Base::keyReleased(const OgreBites::KeyboardEvent& evt)
+{
+    std::cout << "Released (KBD)!" << std::endl;
+    return true;
+}
+
+bool Base::mouseMoved(const OgreBites::MouseMotionEvent& evt)
+{
+    std::cout << "Moved!" << std::endl;
+    return true;
+}
+
+bool Base::mousePressed(const OgreBites::MouseButtonEvent& evt)
+{
+    std::cout << "Pressed!" << std::endl;
+    return true;
+}
+
+bool Base::mouseWheelRolled(const OgreBites::MouseWheelEvent& evt)
+{
+    std::cout << "Rolled!" << std::endl;
+    return true;
+}
+
+bool Base::mouseReleased(const OgreBites::MouseButtonEvent& evt)
+{
+    std::cout << "Released (Mouse)!" << std::endl;
     return true;
 }
 
