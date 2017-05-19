@@ -5,22 +5,17 @@ project(TowerDefense)
 find_package(OGRE 1.10 REQUIRED)
 
 # the search paths
-include_directories(${OGRE_INCLUDE_DIRS})
+include_directories(${OGRE_INCLUDE_DIRS} include/)
 link_directories(${OGRE_LIBRARY_DIRS})
 
-# copy essential config files next to our binary where OGRE autodiscovers them
-# file(COPY ${OGRE_CONFIG_DIR}/plugins.cfg ${OGRE_CONFIG_DIR}/resources.cfg
-#      DESTINATION ${CMAKE_BINARY_DIR})
-
-set (HDRS
-#     include/test.h
-)
-
+# sources
 set (SRCS
+    src/Base.cpp
     src/main.cpp
 )
 
-add_executable(TowerDefense ${HDRS} ${SRCS})
-target_link_libraries(TowerDefense ${OGRE_LIBRARIES})
-
+# where to put the executable
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/dist/bin)
+
+add_executable(TowerDefense ${SRCS})
+target_link_libraries(TowerDefense ${OGRE_LIBRARIES})
