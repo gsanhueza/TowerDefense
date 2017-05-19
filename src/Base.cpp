@@ -13,18 +13,40 @@ bool Base::keyPressed(const OgreBites::KeyboardEvent& evt)
     {
         getRoot()->queueEndRendering();
     }
+    else if (evt.keysym.sym == SDLK_d)
+    {
+        getRoot()->getSceneManager("TowerDefense")->getCamera("myCam")->moveRelative(Ogre::Vector3(1, 0, 0));
+    }
+    else if (evt.keysym.sym == SDLK_a)
+    {
+        getRoot()->getSceneManager("TowerDefense")->getCamera("myCam")->moveRelative(Ogre::Vector3(-1, 0, 0));
+    }
+    else if (evt.keysym.sym == SDLK_w)
+    {
+        getRoot()->getSceneManager("TowerDefense")->getCamera("myCam")->moveRelative(Ogre::Vector3(0, 1, 0));
+    }
+    else if (evt.keysym.sym == SDLK_s)
+    {
+        getRoot()->getSceneManager("TowerDefense")->getCamera("myCam")->moveRelative(Ogre::Vector3(0, -1, 0));
+    }
     return true;
 }
 
 bool Base::keyReleased(const OgreBites::KeyboardEvent& evt)
 {
     std::cout << "Released (KBD)!" << std::endl;
+
     return true;
 }
 
 bool Base::mouseMoved(const OgreBites::MouseMotionEvent& evt)
 {
     std::cout << "Moved!" << std::endl;
+    std::cout << evt.xrel << std::endl;
+    std::cout << evt.yrel << std::endl;
+    getRoot()->getSceneManager("TowerDefense")->getCamera("myCam")->pitch(Ogre::Degree(-0.1 * evt.yrel));
+    getRoot()->getSceneManager("TowerDefense")->getCamera("myCam")->yaw(Ogre::Degree(-0.1 * evt.xrel));
+
     return true;
 }
 
@@ -53,7 +75,7 @@ void Base::setup(void)
 
     // get a pointer to the already created root
     Ogre::Root* root = getRoot();
-    Ogre::SceneManager* scnMgr = root->createSceneManager(Ogre::ST_GENERIC);
+    Ogre::SceneManager* scnMgr = root->createSceneManager(Ogre::ST_GENERIC, "TowerDefense");
 
     // register our scene with the RTSS
     Ogre::RTShader::ShaderGenerator* shadergen = Ogre::RTShader::ShaderGenerator::getSingletonPtr();
