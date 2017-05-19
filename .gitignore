@@ -19,3 +19,5 @@ Ogre.log
 # Executable
 build/dist/bin/OgreApp
 build/dist/bin/OgreApp_d
+build/dist/bin/TowerDefense
+build/dist/bin/TowerDefense_d

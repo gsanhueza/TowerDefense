@@ -23,11 +23,11 @@ bool Base::keyPressed(const OgreBites::KeyboardEvent& evt)
     }
     else if (evt.keysym.sym == SDLK_w)
     {
-        getRoot()->getSceneManager("TowerDefense")->getCamera("myCam")->moveRelative(Ogre::Vector3(0, 1, 0));
+        getRoot()->getSceneManager("TowerDefense")->getCamera("myCam")->moveRelative(Ogre::Vector3(0, 0, -1));
     }
     else if (evt.keysym.sym == SDLK_s)
     {
-        getRoot()->getSceneManager("TowerDefense")->getCamera("myCam")->moveRelative(Ogre::Vector3(0, -1, 0));
+        getRoot()->getSceneManager("TowerDefense")->getCamera("myCam")->moveRelative(Ogre::Vector3(0, 0, 1));
     }
     return true;
 }
