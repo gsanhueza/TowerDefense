@@ -15,19 +15,27 @@ bool Base::keyPressed(const OgreBites::KeyboardEvent& evt)
     }
     else if (evt.keysym.sym == SDLK_d)
     {
-        getRoot()->getSceneManager("TowerDefense")->getCamera("myCam")->moveRelative(Ogre::Vector3(1, 0, 0));
+        getRoot()->getSceneManager("TowerDefense")->getSceneNode("CamNode")->translate(Ogre::Vector3(1, 0, 0));
     }
     else if (evt.keysym.sym == SDLK_a)
     {
-        getRoot()->getSceneManager("TowerDefense")->getCamera("myCam")->moveRelative(Ogre::Vector3(-1, 0, 0));
+        getRoot()->getSceneManager("TowerDefense")->getSceneNode("CamNode")->translate(Ogre::Vector3(-1, 0, 0));
     }
     else if (evt.keysym.sym == SDLK_w)
     {
-        getRoot()->getSceneManager("TowerDefense")->getCamera("myCam")->moveRelative(Ogre::Vector3(0, 0, -1));
+        getRoot()->getSceneManager("TowerDefense")->getSceneNode("CamNode")->translate(Ogre::Vector3(0, 0, -1));
     }
     else if (evt.keysym.sym == SDLK_s)
     {
-        getRoot()->getSceneManager("TowerDefense")->getCamera("myCam")->moveRelative(Ogre::Vector3(0, 0, 1));
+        getRoot()->getSceneManager("TowerDefense")->getSceneNode("CamNode")->translate(Ogre::Vector3(0, 0, 1));
+    }
+    else if (evt.keysym.sym == SDLK_q)
+    {
+        getRoot()->getSceneManager("TowerDefense")->getSceneNode("CamNode")->roll(Ogre::Radian(-0.1));
+    }
+    else if (evt.keysym.sym == SDLK_e)
+    {
+        getRoot()->getSceneManager("TowerDefense")->getSceneNode("CamNode")->roll(Ogre::Radian(0.1));
     }
     return true;
 }
@@ -42,10 +50,8 @@ bool Base::keyReleased(const OgreBites::KeyboardEvent& evt)
 bool Base::mouseMoved(const OgreBites::MouseMotionEvent& evt)
 {
     std::cout << "Moved!" << std::endl;
-    std::cout << evt.xrel << std::endl;
-    std::cout << evt.yrel << std::endl;
-    getRoot()->getSceneManager("TowerDefense")->getCamera("myCam")->pitch(Ogre::Degree(-0.1 * evt.yrel));
-    getRoot()->getSceneManager("TowerDefense")->getCamera("myCam")->yaw(Ogre::Degree(-0.1 * evt.xrel));
+    getRoot()->getSceneManager("TowerDefense")->getSceneNode("CamNode")->yaw(Ogre::Degree(-0.1 * evt.xrel));
+    getRoot()->getSceneManager("TowerDefense")->getSceneNode("CamNode")->pitch(Ogre::Degree(-0.1 * evt.yrel));
 
     return true;
 }
@@ -86,7 +92,8 @@ void Base::setup(void)
     light->setPosition(0, 10, 15);
 
     // also need to tell where we are
-    Ogre::SceneNode* camNode = scnMgr->getRootSceneNode()->createChildSceneNode();
+    Ogre::SceneNode* camNode = scnMgr->getRootSceneNode()->createChildSceneNode("CamNode");
+    std::cout << camNode->getName() << std::endl;
     camNode->setPosition(30, 0, 100);
     camNode->lookAt(Ogre::Vector3(0, 0, -1), Ogre::Node::TS_PARENT);
 
