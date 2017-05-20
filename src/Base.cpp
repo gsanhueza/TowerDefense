@@ -1,5 +1,4 @@
 #include "Base.h"
-#include <iostream>
 
 Base::Base() : OgreBites::ApplicationContext("Base")
 {
@@ -76,7 +75,7 @@ bool Base::mouseReleased(const OgreBites::MouseButtonEvent& evt)
 
 void Base::getTerrainImage(bool flipX, bool flipY, Ogre::Image& img)
 {
-    img.load("terrain.jpg", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+    img.load("Terrain2.jpg", "General");
 
     if (flipX)
         img.flipAroundY();
@@ -177,10 +176,12 @@ void Base::configureTerrainDefaults(Ogre::Light* light, Ogre::SceneManager* scnM
             "growth_weirdfungus-03_normalheight.dds");
 }
 
+
 void Base::setup(void)
 {
     // do not forget to call the base first
     OgreBites::ApplicationContext::setup();
+    Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
     // get a pointer to the already created root
     Ogre::Root* root = getRoot();
@@ -195,12 +196,13 @@ void Base::setup(void)
     light->setType(Ogre::Light::LT_DIRECTIONAL);
     light->setDiffuseColour(Ogre::ColourValue::White);
     light->setSpecularColour(Ogre::ColourValue(0.4, 0.4, 0.4));
-    light->setPosition(0, 10, 15);
+    light->setPosition(1963, 100, 1760);
+    //light->setDirection(Ogre::Vector3(1963, 100, 1660));
 
     // also need to tell where we are
     Ogre::SceneNode* camNode = scnMgr->getRootSceneNode()->createChildSceneNode("CamNode");
     std::cout << camNode->getName() << std::endl;
-    camNode->setPosition(Ogre::Vector3(0, 0, 0));
+    camNode->setPosition(Ogre::Vector3(1963, 50, 1960));
     camNode->lookAt(Ogre::Vector3(1963, 50, 1660), Ogre::Node::TS_PARENT);
 
     // create the camera

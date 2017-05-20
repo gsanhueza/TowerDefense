@@ -1,4 +1,5 @@
 #include <Ogre.h>
+#include <iostream>
 #include <Terrain/OgreTerrain.h>
 #include <Terrain/OgreTerrainGroup.h>
 #include <OgreApplicationContext.h>
