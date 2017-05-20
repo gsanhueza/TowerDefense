@@ -1,4 +1,6 @@
 #include <Ogre.h>
+#include <Terrain/OgreTerrain.h>
+#include <Terrain/OgreTerrainGroup.h>
 #include <OgreApplicationContext.h>
 
 class Base : public OgreBites::ApplicationContext, public OgreBites::InputListener
@@ -14,4 +16,13 @@ public:
     bool mouseWheelRolled(const OgreBites::MouseWheelEvent& evt);
     bool mousePressed(const OgreBites::MouseButtonEvent& evt);
     bool mouseReleased(const OgreBites::MouseButtonEvent& evt);
+
+    void defineTerrain(long x, long y);
+    void initBlendMaps(Ogre::Terrain* terrain);
+    void configureTerrainDefaults(Ogre::Light* light, Ogre::SceneManager* scnMgr);
+    void getTerrainImage(bool flipX, bool flipY, Ogre::Image& img);
+
+    bool mTerrainsImported;
+    Ogre::TerrainGroup* mTerrainGroup;
+    Ogre::TerrainGlobalOptions* mTerrainGlobals;
 };

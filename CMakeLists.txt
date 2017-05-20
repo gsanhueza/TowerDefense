@@ -18,4 +18,8 @@ set (SRCS
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/dist/bin)
 
 add_executable(TowerDefense ${SRCS})
-target_link_libraries(TowerDefense ${OGRE_LIBRARIES})
+target_link_libraries(TowerDefense
+        ${OGRE_LIBRARIES}
+        ${OIS_LIBRARIES}
+        ${OGRE_Overlay_LIBRARIES}
+        ${OGRE_Terrain_LIBRARIES})
